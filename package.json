@@ -1,6 +1,8 @@
 {
   "name": "@puck/react-bem",
   "main": "index.js",
+  "description": " Automate creating BEM classes in React components",
+  "homepage": "https://github.com/WonderNetwork/react-bem#readme",
   "license": "MIT",
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
