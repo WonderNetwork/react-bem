@@ -8,6 +8,7 @@ dist: node_modules
 .PHONY: publish
 publish: dist
 	@jq --arg version $(VERSION) '. + { $$version }' < package.json > dist/package.json
+	cp Readme.md dist/
 	npm publish --access public dist/
 
 .PHONY: clean
