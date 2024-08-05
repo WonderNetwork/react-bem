@@ -13,10 +13,7 @@
 > [!NOTE]
 > Learn how to inject the `bem` prop in [the next chapter](#adding-the-bem-helper-to-your-components)
 
-<table>
-<tr><td colspan=2>Simplest way to create a block with some elements</td></tr>
-<tr>
-<td>
+### Simplest way to create a block with some elements
 
 ```jsx
 function Acme({ bem: { className, element } }) {
@@ -25,61 +22,47 @@ function Acme({ bem: { className, element } }) {
   </div>
 }
 ```
-</td>
-<td>
 
 ```html
 <div class="acme">
   <h1 class="acme__heading">Hello</h1>
 </div>
 ```
-</td>
-</tr>
-<tr><td colspan=2>BEM helper as a shorthand if there are no elements</td></tr>
-<tr>
-<td>
+
+### BEM helper as a shorthand if there are no elements
 
 ```jsx
 function Acme({ bem }) {
   return <div className={bem}>Hello</div>
 }
 ```
-</td>
-<td>
 
 ```html
 <div class="acme">Hello</div>
 ```
-</tr>
 
-<tr><td colspan=2>Adding block modifiers</td></tr>
-<tr>
-<td>
+### Adding block modifiers
 
 ```jsx
 function Acme({ bem: { block } }) {
-  const [on, setOn] = useState(true);
+  const [toggle, setToggle] = useState(true);
   const onClick = useCallback(
-      () => setOn(current => !current),
-      [setOn],
+      () => setToggle(current => !current),
+      [setToggle],
   );
 
-  return <div className={block`${{ on }} mod`}>
+  return <div className={block`${{ toggle }} always-enabled`}>
     <button onClick={onClick}>Toggle</button>
   </div>
 }
 ```
-</td>
-<td>
 
 ```html
-<div class="acme acme--on acme--mod"/>
+<div class="acme acme--toggle acme--always-enabled"/>
 ```
-</tr>
 
-<tr><td colspan=2>Mixing the block with other classes</td></tr>
-<tr>
-<td>
+
+### Mixing the block with other classes
 
 ```jsx
 function Acme({ bem: { block } }) {
@@ -87,25 +70,19 @@ function Acme({ bem: { block } }) {
   </div>
 }
 ```
-</td>
-<td>
 
 ```html
 <div class="acme me-2 d-flex">...</div>
 ```
-</tr>
 
-<tr><td colspan=2>
-    To mix a block with a parent element just pass the element name as `className`
-    and it will be appended automatically
-</td></tr>
-<tr>
-<td>
+### Mixing with parent block
+
+To mix a block with a parent element just pass the element name as `className`
+and it will be appended automatically
 
 ```jsx
 function Child({ bem: { block } }) {
-  const mod = { active: true }
-  return <div className={block`${mod}`.mix`me-2`}/> 
+  return <div className={block`${{ active: true }}`.mix`me-2`}/> 
 }
 
 function Parent({ bem: { className, element } }) {
@@ -114,68 +91,35 @@ function Parent({ bem: { className, element } }) {
   </div>
 }
 ```
-</td>
-<td>
 
 ```html
 <div class="parent">
-  <div class="
-    child
-    parent__element
-    child--active
-    me2
-  "/>
+  <div class="child parent__element child--active me2"/>
 </div>
 ```
-</tr>
 
 
-<tr><td colspan=2>Using elements with modifiers</td></tr>
-<tr>
-<td>
+### Using elements with modifiers
 
 ```jsx
 function Acme({ bem: { block, element } }) {
   return <div className={block}>
-    <div class={
-        element`item ${{ selected: true }} me-2`
-    }/>
-    <div class={
-        element`item ${{ variant: 'primary' }}`
-    }/>
-    <div class={
-        element`item ${['theme-dark']}`
-    }/>
-    <div class={
-        element`item`.mix`d-flex`
-    }/>
+    <div class={element`item ${{ selected: true }} me-2`} />
+    <div class={element`item ${{ variant: 'primary' }}`} />
+    <div class={element`item ${['theme-dark']}`} />
+    <div class={element`item`.mix`d-flex`} />
   </div>
 }
 ```
-</td>
-<td>
 
 ```html
 <div class="acme">
-  <div class="
-    acme__item acme__item--selected me-2
-  "/>
-  <div class="
-    acme__item acme__item--variant-primary
-  "/>
-  <div class="
-    acme__item acme__item--theme-dark
-  "/>
-  <div class="
-    acme__item d-flex
-  "/>
+  <div class="acme__item acme__item--selected me-2" />
+  <div class="acme__item acme__item--variant-primary" />
+  <div class="acme__item acme__item--theme-dark" />
+  <div class="acme__item d-flex" />
 </div>
 ```
-</tr>
-
-
-<tbody>
-</table>
 
 ## Adding the BEM helper to your components
 
