@@ -6,7 +6,7 @@
 
 ## Installation
 
-`npm install react-bem-template-functions`
+`npm install @puck/react-bem`
 
 ## Usage
 
@@ -202,7 +202,7 @@ display name and your CSS block name. The CSS name will be converted to `snake-c
 4. Wrap your export in a `withBem()` HOC
 
 ```tsx
-import { withBem } from 'react-bem-template-functions'
+import { withBem } from '@puck/react-bem'
 
 type Props = {
     title: string;

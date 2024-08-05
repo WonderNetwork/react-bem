@@ -92,7 +92,7 @@ type OptionalClassName = {
 };
 
 function createWrappedComponent<P>(
-  name,
+  name: string,
   Component: React.ComponentType<BemProps<P>>,
 ): React.ComponentType<P & OptionalClassName> {
   const WrappedComponent = (args: P) => {
@@ -104,7 +104,7 @@ function createWrappedComponent<P>(
   return WrappedComponent;
 }
 
-export function withBem(Component) {
+export function withBem<P>(Component: React.ComponentType<BemProps<P>>) {
   const name = Component.displayName;
   if (!name) {
     console.warn(

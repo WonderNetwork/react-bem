@@ -1,5 +1,7 @@
 {
-  "name": "react-bem-template-functions",
+  "name": "@puck/react-bem",
+  "main": "index.js",
+  "license": "MIT",
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.0.0",
