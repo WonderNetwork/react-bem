@@ -18,7 +18,7 @@
 ```jsx
 function Acme({ bem: { className, element } }) {
   return <div className={className}>
-    <h1 class={element`heading`}>Hello</h1>
+    <h1 className={element`heading`}>Hello</h1>
   </div>
 }
 ```
@@ -66,7 +66,7 @@ function Acme({ bem: { block } }) {
 
 ```jsx
 function Acme({ bem: { block } }) {
-  return <div className={mix`me-2 d-flex`}>
+  return <div className={block``.mix`me-2 d-flex`}>
   </div>
 }
 ```
@@ -94,7 +94,7 @@ function Parent({ bem: { className, element } }) {
 
 ```html
 <div class="parent">
-  <div class="child parent__element child--active me2"/>
+  <div class="child parent__element child--active me-2"/>
 </div>
 ```
 
@@ -102,12 +102,12 @@ function Parent({ bem: { className, element } }) {
 ### Using elements with modifiers
 
 ```jsx
-function Acme({ bem: { block, element } }) {
-  return <div className={block}>
-    <div class={element`item ${{ selected: true }} me-2`} />
-    <div class={element`item ${{ variant: 'primary' }}`} />
-    <div class={element`item ${['theme-dark']}`} />
-    <div class={element`item`.mix`d-flex`} />
+function Acme({ bem: { className, element } }) {
+  return <div className={className}>
+    <div className={element`item ${{ selected: true }} me-2`} />
+    <div className={element`item ${{ variant: 'primary' }}`} />
+    <div className={element`item ${['theme-dark']}`} />
+    <div className={element`item`.mix`d-flex`} />
   </div>
 }
 ```
