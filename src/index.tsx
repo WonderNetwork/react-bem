@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
-import classNames, { ClassNameHash } from "./classNames";
+import classNames, { ClassName } from "./classNames";
 import BemFactory from "./BemFactory";
 
-type TemplateArgs = [TemplateStringsArray, ...ClassNameHash[]];
-type TemplateArgsZipped = (string | ClassNameHash)[];
+type TemplateArgs = [TemplateStringsArray, ...ClassName[]];
+type TemplateArgsZipped = (string | ClassName)[];
 type TemplateFn = (...args: TemplateArgs) => string;
 type MixableTemplateFn = (...args: TemplateArgs) => Mixable;
 type TemplateFnZipped = (args: TemplateArgsZipped) => string;
@@ -14,17 +14,17 @@ type Mixable = string & {
 };
 
 function taggedLiteral(fn: TemplateFnZipped): TemplateFn {
-  function* zip(strings: string[], params: ClassNameHash[]) {
+  function* zip(strings: string[], params: ClassName[]) {
     yield strings.shift() as string;
     while (strings.length) {
-      yield params.shift() as ClassNameHash;
+      yield params.shift() as ClassName;
       yield strings.shift() as string;
     }
   }
 
   return (
     modifiers: TemplateStringsArray | undefined = undefined,
-    ...dynamic: ClassNameHash[]
+    ...dynamic: ClassName[]
   ) => fn([...zip([...(modifiers || [])], [...dynamic])]);
 }
 
@@ -48,7 +48,10 @@ type BemHelper = string & {
   mix: TemplateFn;
 };
 
-function helperFactory(name: string, autoMix: string | undefined): BemHelper {
+function helperFactory(
+  name: string,
+  autoMix: object | string | undefined,
+): BemHelper {
   const snakeName = name.replace(/([a-z])(?=[A-Z])/g, "$1-").toLowerCase();
   const bemFactory = new BemFactory(snakeName, autoMix);
   const className = bemFactory.toString();
@@ -97,7 +100,10 @@ function createWrappedComponent<P>(
 ): React.ComponentType<P & OptionalClassName> {
   const WrappedComponent = (args: P) => {
     const parentMix = (args as OptionalClassName)?.className;
-    const bem = useMemo(() => helperFactory(name, parentMix), [parentMix]);
+    const bem = useMemo(
+      () => helperFactory(name, parentMix),
+      [String(parentMix)],
+    );
     return <Component {...args} bem={bem} />;
   };
   WrappedComponent.displayName = `Bem(${name})`;

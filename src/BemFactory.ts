@@ -3,13 +3,13 @@ import classNames, { ClassName } from "./classNames";
 export default class BemFactory {
   constructor(
     private readonly name: string,
-    private autoMix: string | undefined = undefined,
+    private autoMix: object | string = "",
   ) {}
 
   block(...modifiers: ClassName[]): string {
     return classNames(
       this.name,
-      this.autoMix,
+      String(this.autoMix),
       this.prefixWith(this.name, modifiers),
     );
   }

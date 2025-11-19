@@ -99,4 +99,28 @@ describe("withBem", () => {
       "alpha__bravo px-2",
     );
   });
+
+  test("automatically mixing with parent block casts to string", () => {
+    const Child = withBem.named(
+      "Child",
+      function Child({ bem: { className } }) {
+        return <div className={className} data-testid="component" />;
+      },
+    );
+
+    const Parent = withBem.named(
+      "Parent",
+      function Parent({ bem: { className, element } }) {
+        return (
+          <div className={className}>
+            <Child className={element`element`} />
+          </div>
+        );
+      },
+    );
+    const { getByTestId } = render(<Parent />);
+    const { className } = getByTestId("component");
+
+    expect(className).toBe("child parent__element");
+  });
 });
